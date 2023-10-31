@@ -1,0 +1,35 @@
+version: '3'
+services:
+  grobid:
+    image: lfoppiano/grobid:0.7.2
+  scraper:
+    build: ./scraper
+    container_name: archives_scraper_container
+    ports:
+      - "8070"
+    volumes:
+      - ./scraper/output:/scraper/output
+    tty: true
+  table_and_figures_extraction:
+    build: ./table_and_figure_extract
+    container_name: table_and_figure_extraction_container
+    ports:
+      - "8080"
+    volumes:
+      - ./table_and_figure_extract/output:/home/input_ttl_files
+    tty: true
+  section_and_bibliography_extraction:
+    build: ./section_and_bibliography_extraction
+    container_name: section_and_bibliography_container
+    ports:
+      - "8090"
+    volumes:
+      - ./section_and_bibliography_extraction/output:/home/input_ttl_files
+  abstract_embedder:
+    build: ./abstract_embedder
+    container_name: abstract_embedder_container
+    ports:
+      - "8060"
+    volumes:
+      - ./abstract_embedder/output:/home/input_ttl_files
+    tty: true
