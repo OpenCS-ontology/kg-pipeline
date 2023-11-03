@@ -28,15 +28,17 @@ services:
     volumes:
       - ttl_folder:/home/input_ttl_files
       - pdf_folder:/input_pdf_files
+      - ttl_files_for_every_run:/home/final_ttls_for_every_run
   abstract_embedder:
     image: ghcr.io/opencs-ontology/publication-embeddings:main
     container_name: abstract_embedder_container
     ports:
       - "8060"
     volumes:
-      - ttl_folder:/home/input_ttl_files
+      - ttl_files_for_every_run:/home/input_ttl_files
     tty: true
 
 volumes:
   ttl_folder:
   pdf_folder:
+  ttl_files_for_every_run:
