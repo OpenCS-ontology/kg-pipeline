@@ -29,6 +29,7 @@ services:
       - ttl_folder:/home/input_ttl_files
       - pdf_folder:/input_pdf_files
       - ttl_files_for_every_run:/home/final_ttls_for_every_run
+    tty: true
   abstract_embedder:
     image: ghcr.io/opencs-ontology/publication-embeddings:main
     container_name: abstract_embedder_container
