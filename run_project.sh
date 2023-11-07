@@ -38,7 +38,7 @@ docker compose up -d
 
 # docker exec -it table_and_figure_extraction_container bash /home/container_run.sh
 
-# docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
+docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
 
 docker exec -it topical_classifier_container python3 /home/pipeline.py
 
