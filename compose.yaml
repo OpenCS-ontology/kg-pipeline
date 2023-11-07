@@ -37,6 +37,7 @@ services:
   #     - "8060"
   #   volumes:
   #     - ttl_files_for_every_run:/home/input_ttl_files
+  #     # - concepts_embeddings:/home/output_concepts_json
   #   tty: true
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
@@ -60,9 +61,11 @@ services:
       - "8050"
     volumes:
       - ttl_files_for_every_run:/home/output
+      # - concepts_embeddings:/home/concepts_json
     tty: true
 
 volumes:
   ttl_folder:
   pdf_folder:
   ttl_files_for_every_run:
+  concepts_embeddings:

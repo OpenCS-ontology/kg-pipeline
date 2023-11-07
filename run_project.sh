@@ -41,3 +41,6 @@ docker compose up -d
 # docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
 
 docker exec -it topical_classifier_container python3 /home/pipeline.py
+
+docker stop elasticsearch_container
+docker rm elasticsearch_container
