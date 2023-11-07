@@ -59,7 +59,7 @@ services:
     ports:
       - "8050"
     volumes:
-      - ttl_folder:/home/output
+      - ttl_files_for_every_run:/home/output
     tty: true
 
 volumes:
