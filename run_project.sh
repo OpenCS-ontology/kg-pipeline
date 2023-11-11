@@ -19,13 +19,13 @@ done
 # echo "Pulling publication embeddings image..."
 # docker pull ghcr.io/opencs-ontology/publication-embeddings:main
 
-echo "Pulling elastic search image..."
-docker pull docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+# echo "Pulling elastic search image..."
+# docker pull docker.elastic.co/elasticsearch/elasticsearch:7.12.1
 
-echo "Pulling topical classifier image..."
-docker pull ghcr.io/opencs-ontology/topical-classifier-elastic:main
+# echo "Pulling topical classifier image..."
+# docker pull ghcr.io/opencs-ontology/topical-classifier-elastic:main
 
-docker compose up -d
+# docker compose up -d
 
 # archives=("scpe" "csis")
 
@@ -38,9 +38,6 @@ docker compose up -d
 
 # docker exec -it table_and_figure_extraction_container bash /home/container_run.sh
 
-docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
+# docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
 
 docker exec -it topical_classifier_container python3 /home/pipeline.py
-
-docker stop elasticsearch_container
-docker rm elasticsearch_container
