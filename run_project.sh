@@ -28,18 +28,18 @@ done
 # echo "Pulling publication recommender image..."
 # docker pull ghcr.io/opencs-ontology/publication-recommender:main
 
-docker compose up -d
+# docker compose up -d
 
 archives=("scpe" "csis")
 
-# docker exec -it archives_scraper_container python3 main.py --volume $volume
+docker exec -it archives_scraper_container python3 main.py --csis_volumes=$csis_volumes --scpe_issues=$scpe_issues
 
 # docker exec -it section_and_bibliography_container bash ./container_run.sh
 
 # docker exec -it table_and_figure_extraction_container bash /home/container_run.sh
 
-docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
+# docker exec -it abstract_embedder_container python3 /home/embed_abstracts.py
 
-docker exec -it topical_classifier_container python3 /home/pipeline.py
+# docker exec -it topical_classifier_container python3 /home/pipeline.py
 
 # docker exec -it publication_recommender_container python3 /home/similar_papers.py
