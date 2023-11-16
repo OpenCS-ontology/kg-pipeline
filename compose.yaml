@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   grobid:
     image: lfoppiano/grobid:0.7.2
@@ -11,129 +11,126 @@ services:
       - ttl_folder:/scraper/output/ttls
       - pdf_folder:/scraper/output/pdfs
     tty: true
-  # table_and_figures_extraction:
-  #   image: ghcr.io/opencs-ontology/table-and-figure-ie:main
-  #   container_name: table_and_figure_extraction_container
-  #   ports:
-  #     - "8080"
-  #   volumes:
-  #     - ttl_folder:/home/input_ttl_files
-  #     - pdf_folder:/input_pdf_files
-  #     - ttl_files_for_every_run:/home/final_ttls_for_every_run
-  #   tty: true
-  # section_and_bibliography_extraction:
-  #   image: ghcr.io/opencs-ontology/section-and-bibliography-ie:main
-  #   container_name: section_and_bibliography_container
-  #   ports:
-  #     - "8090"
-  #   volumes:
-  #     - ttl_folder:/home/input_ttl_files
-  #     - pdf_folder:/input_pdf_files
-  #   tty: true
-  # abstract_embedder:
-  #   image: ghcr.io/opencs-ontology/publication-embeddings:main
-  #   container_name: abstract_embedder_container
-  #   ports:
-  #     - "8060"
-  #   volumes:
-  #     - ttl_files_for_every_run:/home/input_ttl_files
-  #     - concepts_embeddings:/home/output_concepts_json
-  #     - embedded_ttls:/home/output_ttl_files
-  #   tty: true
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
-  #   container_name: elasticsearch_container
-  #   environment:
-  #     - node.name=elasticsearch
-  #     - discovery.type=single-node
-  #   ports:
-  #     - "9200:9200"
-  #     - "9300:9300"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   mem_limit: 2g
-  # topical_classifier_es:
-  #   image: ghcr.io/opencs-ontology/topical-classifier-elastic:main
-  #   container_name: topical_classifier_container
-  #   network_mode: host
-  #   ports:
-  #     - "8050"
-  #   volumes:
-  #     - embedded_ttls:/home/output
-  #     - concepts_embeddings:/home/concepts_json
-  #   tty: true
-  # publication_recommender:
-  #   image: ghcr.io/opencs-ontology/publication-recommender:main
-  #   container_name: publication_recommender_container
-  #   ports:
-  #     - "8060"
-  #   volumes:
-  #     - embedded_ttls:/home/input_ttl_files
-  #   tty: true
-  # etcd:
-  #   container_name: milvus-etcd
-  #   image: quay.io/coreos/etcd:v3.5.5
-  #   environment:
-  #     - ETCD_AUTO_COMPACTION_MODE=revision
-  #     - ETCD_AUTO_COMPACTION_RETENTION=1000
-  #     - ETCD_QUOTA_BACKEND_BYTES=4294967296
-  #     - ETCD_SNAPSHOT_COUNT=50000
-  #   volumes:
-  #     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
-  #   command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
-  #   healthcheck:
-  #     test: [ "CMD", "etcdctl", "endpoint", "health" ]
-  #     interval: 30s
-  #     timeout: 20s
-  #     retries: 3
-  # minio:
-  #   container_name: milvus-minio
-  #   image: minio/minio:RELEASE.2023-03-20T20-16-18Z
-  #   environment:
-  #     MINIO_ACCESS_KEY: minioadmin
-  #     MINIO_SECRET_KEY: minioadmin
-  #   ports:
-  #     - "9001:9001"
-  #     - "9000:9000"
-  #   volumes:
-  #     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
-  #   command: minio server /minio_data --console-address ":9001"
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "curl",
-  #         "-f",
-  #         "http://localhost:9000/minio/health/live"
-  #       ]
-  #     interval: 30s
-  #     timeout: 20s
-  #     retries: 3
-  # standalone:
-  #   container_name: milvus-standalone
-  #   image: milvusdb/milvus:v2.3.3
-  #   command: [ "milvus", "run", "standalone" ]
-  #   security_opt:
-  #     - seccomp:unconfined
-  #   environment:
-  #     ETCD_ENDPOINTS: etcd:2379
-  #     MINIO_ADDRESS: minio:9000
-  #   volumes:
-  #     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
-  #   healthcheck:
-  #     test: [ "CMD", "curl", "-f", "http://localhost:9091/healthz" ]
-  #     interval: 30s
-  #     start_period: 90s
-  #     timeout: 20s
-  #     retries: 3
-  #   ports:
-  #     - "19530:19530"
-  #     - "9091:9091"
-  #   depends_on:
-  #     - "etcd"
-  #     - "minio"
+  table_and_figures_extraction:
+    image: ghcr.io/opencs-ontology/table-and-figure-ie:main
+    container_name: table_and_figure_extraction_container
+    ports:
+      - "8080"
+    volumes:
+      - ttl_folder:/home/input_ttl_files
+      - pdf_folder:/input_pdf_files
+      - ttl_files_for_every_run:/home/final_ttls_for_every_run
+    tty: true
+  section_and_bibliography_extraction:
+    image: ghcr.io/opencs-ontology/section-and-bibliography-ie:main
+    container_name: section_and_bibliography_container
+    ports:
+      - "8090"
+    volumes:
+      - ttl_folder:/home/input_ttl_files
+      - pdf_folder:/input_pdf_files
+    tty: true
+  abstract_embedder:
+    image: ghcr.io/opencs-ontology/publication-embeddings:main
+    container_name: abstract_embedder_container
+    ports:
+      - "8060"
+    volumes:
+      - ttl_files_for_every_run:/home/input_ttl_files
+      - concepts_embeddings:/home/output_concepts_json
+      - embedded_ttls:/home/output_ttl_files
+    tty: true
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    container_name: elasticsearch_container
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 2g
+  topical_classifier_es:
+    image: ghcr.io/opencs-ontology/topical-classifier-elastic:main
+    container_name: topical_classifier_container
+    network_mode: host
+    ports:
+      - "8050"
+    volumes:
+      - embedded_ttls:/home/output
+      - concepts_embeddings:/home/concepts_json
+    tty: true
+  publication_recommender:
+    image: ghcr.io/opencs-ontology/publication-recommender:main
+    container_name: publication_recommender_container
+    ports:
+      - "8060"
+    volumes:
+      - embedded_ttls:/home/input_ttl_files
+    tty: true
+
+  etcd:
+    container_name: milvus-etcd
+    image: quay.io/coreos/etcd:v3.5.5
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  minio:
+    container_name: milvus-minio
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - "9001:9001"
+      - "9000:9000"
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
+    command: minio server /minio_data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  standalone:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.3.3
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+    - seccomp:unconfined
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio:9000
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 30s
+      start_period: 90s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    depends_on:
+      - "etcd"
+      - "minio"
 
 volumes:
   ttl_folder:
