@@ -12,9 +12,7 @@ docker compose up -d
 
 docker exec -it archives_scraper_container python3 main.py --csis_volumes=$csis_volumes --scpe_issues=$scpe_issues
 
-# docker exec -it section_and_bibliography_container bash ./container_run.sh
-
-# docker exec -it table_and_figure_extraction_container bash /home/container_run.sh
+docker exec -it information_extraction_container bash /home/container_run.sh
 
 # docker exec -it abstract_embedder_container python3 /home/embed_papers.py
 
