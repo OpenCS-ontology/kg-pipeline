@@ -1,1 +1,6 @@
 volumes/
+info_extractor_output/
+final_output/
+embedder_output/
+classifier_output/
+scraper_output/
